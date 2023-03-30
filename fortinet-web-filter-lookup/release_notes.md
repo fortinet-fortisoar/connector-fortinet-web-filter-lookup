@@ -1,4 +1,4 @@
-##### 1.0.2 Modifications
+##### 1.1.0 Modifications
 - Modified to query the new premium API for fortiguard https://premiumapi.fortinet.com/v1/rate
 - Added the token in the config
 #### What's Improved

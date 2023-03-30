@@ -5,8 +5,7 @@
   Copyright end """
 
 from connectors.core.connector import get_logger, ConnectorError
-import requests
-from bs4 import BeautifulSoup
+import requests 
 import requests.exceptions as req_exceptions
 
 MACRO_LIST = ["URL_Enrichment_Playbooks_IRIs", "Domain_Enrichment_Playbooks_IRIs"]
