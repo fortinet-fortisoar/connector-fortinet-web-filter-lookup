@@ -1,6 +1,6 @@
 {
     "name": "fortinet-web-filter-lookup",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "label": "Fortinet Web Filter Lookup",
     "description": "Fortinet Web Filter Lookup allows users to check category and classification for any Domain",
     "publisher": "Fortinet",
@@ -25,7 +25,7 @@
                 "visible": true,
                 "editable": true,
                 "required": true,
-                "value": "https://fortiguard.com/"
+                "value": "https://premiumapi.fortinet.com"
             },
             {
                 "title": "Verify SSL",
@@ -37,6 +37,16 @@
                 "visible": true,
                 "editable": true,
                 "value": true
+            },
+            {
+                "title": "Token",
+                "name": "token",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "description": "Token to access the Fortinet Web Filter Lookup. To be requested in FNDN website: https://fndn.fortinet.net/index.php?app=fortiguard&module=apitokens&controller=tokenrequest&do=requestToken",
+                "tooltip": "To be requested on FNDN: https://fndn.fortinet.net/index.php?app=fortiguard&module=apitokens&controller=tokenrequest&do=requestToken"
             }
         ]
     },
