@@ -5,8 +5,7 @@
   Copyright end """
 
 from connectors.core.connector import get_logger, ConnectorError
-import requests
-from bs4 import BeautifulSoup
+import requests 
 import requests.exceptions as req_exceptions
 
 MACRO_LIST = ["URL_Enrichment_Playbooks_IRIs", "Domain_Enrichment_Playbooks_IRIs"]
@@ -16,15 +15,17 @@ logger = get_logger('fortinet-web-filter-lookup')
 
 class FortiGuard(object):
     def __init__(self, config):
-        self.base_url = config.get('base_url') + 'webfilter'
+        self.base_url = config.get('base_url') + '/v1/rate'
         self.verify_ssl = config.get('verify_ssl')
+        self.token = config.get("token")
 
     def get_response(self, sample_url):
         try:
             url = self.base_url
             use_ssl = self.verify_ssl
-            params = {'q': sample_url, 'version': 8}
-            req = requests.get(url=url, params=params, verify=use_ssl)
+            params = {'url': sample_url, 'cate_ver': 8}
+            header = {'Accept': 'application/json', 'Token': self.token}
+            req = requests.get(url=url, params=params, headers=header, verify=use_ssl)
             logger.error('Response: req = {0}'.format(req))
             return req
 
@@ -47,10 +48,8 @@ class FortiGuard(object):
     def check_response(self, response, sample_url):
         try:
             if response.status_code == 200:
-                html_parser = BeautifulSoup(response.text)
-                category = html_parser.find('div', {'class': 'well'}).find('h4', {'class': 'info_title'}).text
-                info = html_parser.find('div', {'class': 'well'}).find_all('p')[1].text
-                return {'url': sample_url, 'category': category.replace('Category: ', ''), 'info': info}
+                json_payload =  response.json()
+                return {'url': sample_url, 'category': json_payload['categoryname'], 'info': json_payload['categoryid']}
             else:
                 raise ConnectorError('ERROR Response Status Code : <{0}>'.format(response.status_code))
 
