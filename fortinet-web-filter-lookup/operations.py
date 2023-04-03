@@ -1,11 +1,11 @@
 """ Copyright start
-  Copyright (C) 2008 - 2022 Fortinet Inc.
+  Copyright (C) 2008 - 2023 Fortinet Inc.
   All rights reserved.
   FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
   Copyright end """
 
 from connectors.core.connector import get_logger, ConnectorError
-import requests 
+import requests
 import requests.exceptions as req_exceptions
 
 MACRO_LIST = ["URL_Enrichment_Playbooks_IRIs", "Domain_Enrichment_Playbooks_IRIs"]
@@ -48,7 +48,7 @@ class FortiGuard(object):
     def check_response(self, response, sample_url):
         try:
             if response.status_code == 200:
-                json_payload =  response.json()
+                json_payload = response.json()
                 return {'url': sample_url, 'category': json_payload['categoryname'], 'info': json_payload['categoryid']}
             else:
                 raise ConnectorError('ERROR Response Status Code : <{0}>'.format(response.status_code))
