@@ -4,7 +4,7 @@
     {
       "uuid": "0e4da6a5-173c-4f8c-9015-4cd918510289",
       "@type": "WorkflowCollection",
-      "name": "Sample - Fortinet Web Filter Lookup - 1.0.1",
+      "name": "Sample - Fortinet Web Filter Lookup - 2.0.0",
       "description": "Fortinet Web Filter Lookup allows users to check category and classification for any Domain",
       "visible": true,
       "image": null,
@@ -58,7 +58,7 @@
                 "params": {
                   "sample_url": "{{vars.indicator_value}}"
                 },
-                "version": "1.0.1",
+                "version": "2.0.0",
                 "connector": "fortinet-web-filter-lookup",
                 "operation": "url_review",
                 "mock_result": "{\n  \"data\": {\n    \"url\": \"{{vars.indicator_value}}\",\n    \"info\": \"Click here to see if this category is\\n                        currently blocked.\",\n    \"category\": \"Malicious Websites\"\n  },\n  \"status\": \"Success\",\n  \"message\": \"\",\n  \"operation\": null\n}",
@@ -308,7 +308,7 @@
                 "params": {
                   "sample_url": ""
                 },
-                "version": "1.0.1",
+                "version": "2.0.0",
                 "connector": "fortinet-web-filter-lookup",
                 "operation": "url_review",
                 "operationTitle": "Check Category of Domain or URL",
