@@ -61,13 +61,13 @@
         {
           "name": "sample_url",
           "title": "Submit Domain/URL",
-          "description": "Specify a valid domain or url.",
+          "description": "Specify a valid domain or url for the review process.",
           "type": "text",
           "editable": true,
           "visible": true,
           "required": true,
           "value": "",
-          "tooltip": "Specify a valid domain or url.",
+          "tooltip": "Specify a valid domain or url for the review process.",
           "placeholder": "example.com or https://example.com"
         }
       ],
