@@ -25,9 +25,19 @@ class FortiGuard(object):
             use_ssl = self.verify_ssl
             params = {'url': sample_url, 'cate_ver': 8}
             header = {'Accept': 'application/json', 'Token': self.token}
-            req = requests.get(url=url, params=params, headers=header, verify=use_ssl)
-            logger.error('Response: req = {0}'.format(req))
-            return req
+            response = requests.get(url=url, params=params, headers=header, verify=use_ssl)
+            if response.status_code == 200:
+                json_payload = response.json()
+                return {'url': sample_url, 'category': json_payload['categoryname'], 'info': json_payload['categoryid']}
+            else:
+                if response.text != "":
+                    err_resp = response.json()
+                    failure_msg = err_resp.get("title") or ""
+                    error_msg = 'Response [{0}:{1} Details:{2}]'.format(response.status_code, response.reason, failure_msg)
+                else:
+                    error_msg = 'Response [{0}:{1}]'.format(response.status_code, response.reason)
+                logger.error(error_msg)
+                raise ConnectorError(error_msg)
 
         except req_exceptions.SSLError:
             logger.error('An SSL error occurred')
@@ -45,55 +55,18 @@ class FortiGuard(object):
             logger.error(str(err))
             raise ConnectorError('{0}'.format(str(err)))
 
-    def check_response(self, response, sample_url):
-        try:
-            if response.status_code == 200:
-                json_payload = response.json()
-                return {'url': sample_url, 'category': json_payload['categoryname'], 'info': json_payload['categoryid']}
-            else:
-                raise ConnectorError('ERROR Response Status Code : <{0}>'.format(response.status_code))
-
-        except Exception as err:
-            logger.error(str(err))
-            raise ConnectorError('{0}'.format(str(err)))
-
-    def site_hc(self, response, base_url):
-        try:
-            if response.status_code != 200:
-                raise ConnectorError('{0} is unavailable. Status Code : <{1}>'.format(base_url, response.status_code))
-            else:
-                return True
-
-        except Exception as err:
-            logger.error(str(err))
-
 
 def url_review(config, params):
-    try:
-        logger.info('Initiating URL review operation')
-        s = FortiGuard(config)
-        sample_url = params.get('sample_url')
-        response = s.get_response(sample_url)
-        result = s.check_response(response, sample_url)
-        return result
-
-    except Exception as err:
-        logger.error(str(err))
-        raise ConnectorError('{0}'.format(str(err)))
+    s = FortiGuard(config)
+    sample_url = params.get('sample_url')
+    return s.get_response(sample_url)
 
 
 def health_check(config):
-    try:
-        logger.info('Initiating Connector Health Check')
-        s = FortiGuard(config)
-        base_url = config.get('base_url')
-        response = s.get_response(base_url)
-        result = s.site_hc(response, base_url)
-        return result
-
-    except Exception as err:
-        logger.error(str(err))
-        raise ConnectorError('{0}'.format(str(err)))
+    logger.info('Initiating Connector Health Check')
+    s = FortiGuard(config)
+    response = s.get_response("https://fortinet.com")
+    return True
 
 
 operations = {
