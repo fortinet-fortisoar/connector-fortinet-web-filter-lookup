@@ -33,16 +33,16 @@
         "required": true,
         "editable": true,
         "visible": true,
-        "type": "text",
-        "description": "Token to access the Fortinet Web Filter Lookup. To be requested in FNDN website: https://fndn.fortinet.net/index.php?app=fortiguard&module=apitokens&controller=tokenrequest&do=requestToken",
-        "tooltip": "To be requested on FNDN: https://fndn.fortinet.net/index.php?app=fortiguard&module=apitokens&controller=tokenrequest&do=requestToken"
+        "type": "password",
+        "description": "The API access token that is required to connect to the Fortinet Web Filter Lookup server and perform automated operations.",
+        "tooltip": "The API access token that is required to connect to the Fortinet Web Filter Lookup server and perform automated operations."
       },
       {
         "title": "Verify SSL",
         "name": "verify_ssl",
         "type": "checkbox",
-        "tooltip": "It is Selected then it verifies SSL",
-        "description": "Specifies whether SSL verification required to establish the connection between the connector and server. By default, this option is set as false.",
+        "tooltip": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set to True.",
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set to True.",
         "required": false,
         "visible": true,
         "editable": true,
@@ -54,20 +54,20 @@
     {
       "operation": "url_review",
       "annotation": "url_review",
-      "description": "Get Domain reviewed by Fortinet Web Filter Lookup",
+      "description": "Get category of domain or url by Fortinet Web Filter Lookup",
       "category": "investigation",
       "title": "Check Category of Domain or URL",
       "parameters": [
         {
           "name": "sample_url",
           "title": "Submit Domain/URL",
-          "description": "Please enter a valid Domain for the review process",
+          "description": "Specify a valid domain or url for the review process.",
           "type": "text",
           "editable": true,
           "visible": true,
           "required": true,
           "value": "",
-          "tooltip": "Please enter a valid Domain or URL for the review process",
+          "tooltip": "Specify a valid domain or url for the review process.",
           "placeholder": "example.com or https://example.com"
         }
       ],
